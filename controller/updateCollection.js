@@ -1,4 +1,4 @@
-const { attendanceModel, entityModel, departmentModel } = require("../models");
+const { attendanceModel, entityModel, departmentModel, userModel } = require("../models");
 
 // Map entity names to their corresponding models
 const MODEL_MAP = {
@@ -6,6 +6,7 @@ const MODEL_MAP = {
     notes: entityModel,
     pyq: entityModel,
     departments: departmentModel,
+    user: userModel,
 };
 
 exports.updateCollections = async (request, response) => {

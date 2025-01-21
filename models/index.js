@@ -34,6 +34,14 @@ const userSchema = mongoose.Schema(
         role: {
             type: String,
         },
+        likedEntities: [
+            {
+                type: {
+                    entityId: { type: String, required: true },
+                    entity: { type: String, required: true },
+                },
+            },
+        ],
     },
     { timestamps: true },
 );
