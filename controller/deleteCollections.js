@@ -1,6 +1,10 @@
-const { attendanceModel, entityModel, departmentModel, userModel } = require("../models");
+const {
+    attendanceModel,
+    entityModel,
+    departmentModel,
+    userModel,
+} = require("../models");
 
-// Map entity names to their corresponding models
 const MODEL_MAP = {
     attendance: attendanceModel,
     notes: entityModel,
@@ -9,19 +13,10 @@ const MODEL_MAP = {
     users: userModel,
 };
 
-exports.updateCollections = async (request, response) => {
+exports.deleteCollection = async (request, response) => {
     try {
-        const { entity, entityId, attributesToUpdate } = request.body;
+        const { entity, entityId } = request.query;
 
-        // Validate required fields
-        if (!entity || !entityId || !attributesToUpdate) {
-            return response.status(400).json({
-                message:
-                    "Missing required fields: entity, entityId, or attributesToUpdate",
-            });
-        }
-
-        // Get the appropriate model
         const Model = MODEL_MAP[entity];
         if (!Model) {
             return response.status(400).json({
@@ -37,15 +32,10 @@ exports.updateCollections = async (request, response) => {
             });
         }
 
-        const updatedEntity = await Model.findOneAndUpdate(
-            { entityId },
-            { $set: attributesToUpdate },
-            { new: true },
-        );
+        const updatedEntity = await Model.findOneAndDelete({ entityId });
 
         return response.status(200).json({
-            message: "Entity updated successfully",
-            data: updatedEntity,
+            message: "Entity deleted successfully",
         });
     } catch (error) {
         console.error("Error updating collections:", error);

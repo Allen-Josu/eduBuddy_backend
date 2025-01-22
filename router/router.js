@@ -10,6 +10,7 @@ const {
 } = require("../controller/departmentController");
 const { newUser, getUser, login } = require("../controller/userController");
 const { updateCollections } = require("../controller/updateCollection");
+const { deleteCollection } = require("../controller/deleteCollections");
 
 const router = express.Router();
 
@@ -27,5 +28,6 @@ router.get("/attendance", getAttendance);
 router.post("/attendance", newAttendance);
 
 router.patch("/update-entity", updateCollections);
+router.delete("/delete-entity", deleteCollection);
 
 module.exports = router;
