@@ -73,7 +73,7 @@ const entitySchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        userId: {
+        studentId: {
             type: String,
             required: true,
         },
