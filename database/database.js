@@ -1,11 +1,15 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const connection = process.env.database
+const connection = process.env.database;
+const dbName = process.env.dbName;
 
-mongoose.connect(connection).then(()=>{
-    console.log("MongoDb connected successfully");
-}).catch((error=> console.log("An Error has been occured",error)))
+mongoose
+  .connect(connection, {
+    dbName: dbName,
+  })
+  .then(() => {
+    console.log("MongoDB connected successfully to edubuddy database");
+  })
+  .catch((error) => console.log("An Error has occurred", error));
 
-module.exports = connection
-
-
+module.exports = connection;

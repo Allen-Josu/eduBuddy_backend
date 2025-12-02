@@ -1,13 +1,13 @@
-const { userModel } = require("../models");
+const { userModel } = require("../models/userModel");
 
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
 exports.newUser = async (request, response) => {
-    const { studentId, role, password } = request.body;
+    const { email, role, password } = request.body;
     try {
         if (role === "user") {
-            const existingUser = await userModel.findOne({ studentId });
+            const existingUser = await userModel.findOne({ email });
             if (existingUser) {
                 return response
                     .status(400)
@@ -36,7 +36,7 @@ exports.newUser = async (request, response) => {
 
 
 exports.getUser = async (request, response) => {
-    const { studentId, password } = request.body;
+    const { email, password } = request.body;
     const { entityType, entity, entityId } = request.query;
     try {
         if (entityType == "all") {
@@ -60,7 +60,7 @@ exports.getUser = async (request, response) => {
                 .status(200)
                 .json({ results: userData, totalCount: 1 });
         }
-        const userData = await userModel.findOne({ studentId, password });
+        const userData = await userModel.findOne({ email, password });
 
         if (!userData) {
             return response
@@ -77,12 +77,12 @@ exports.getUser = async (request, response) => {
 };
 
 exports.login = async (request, response) => {
-    const { studentId, password, username } = request.body;
+    const { email, password, username } = request.body;
     const { role } = request.query;
 
     try {
         if (role === "user") {
-            const userData = await userModel.findOne({ studentId });
+            const userData = await userModel.findOne({ email });
 
             if (!userData) {
                 return response.status(401).json({ message: "Invalid credentials" });
@@ -101,7 +101,7 @@ exports.login = async (request, response) => {
             });
 
         } else if (role === "admin") {
-            const adminData = await userModel.findOne({ username });
+            const adminData = await userModel.findOne({ email });
 
             if (!adminData) {
                 return response.status(401).json({ message: "Invalid credentials" });

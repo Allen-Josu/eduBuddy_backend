@@ -1,4 +1,4 @@
-const { departmentModel } = require("../models");
+const { departmentModel } = require("../models/departmentModel");
 
 exports.getDepartment = async (request, response) => {
     const { entity, entityId } = request.query;
